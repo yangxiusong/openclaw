@@ -132,3 +132,4 @@ openclaw restart
 需要我帮你把以上所有命令整理成一键执行的脚本，直接复制到Ubuntu终端运行即可完成全部配置吗？
 
 updatenew
+haha
