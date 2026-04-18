@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "skills": {
+    "file-processor": {
+      "version": "1.0.0",
+      "installedAt": 1775377143279
+    },
+    "email-manager": {
+      "version": "1.0.0",
+      "installedAt": 1775377210499
+    },
+    "data-analyzer": {
+      "version": "1.1.0",
+      "installedAt": 1775377226909
+    },
+    "copywriter": {
+      "version": "1.1.0",
+      "installedAt": 1775382737608
+    },
+    "skill-vetter": {
+      "version": "1.0.0",
+      "installedAt": 1775382990689
+    },
+    "brave-api-search": {
+      "version": "3.0.2",
+      "installedAt": 1775383093622
+    },
+    "brave-web-search": {
+      "version": "1.0.1",
+      "installedAt": 1775383102854
+    }
+  }
+}
