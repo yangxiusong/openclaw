@@ -7,7 +7,7 @@
 
 import { type ChildProcess, spawn } from "node:child_process";
 import { hasBinary } from "../agents/skills.js";
-import type { OpenClawConfig } from "../config/config.js";
+import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { createSubsystemLogger } from "../logging/subsystem.js";
 import { runCommandWithTimeout } from "../process/exec.js";
 import { ensureTailscaleEndpoint } from "./gmail-setup-utils.js";
@@ -232,11 +232,4 @@ export async function stopGmailWatcher(): Promise<void> {
 
   currentConfig = null;
   log.info("gmail watcher stopped");
-}
-
-/**
- * Check if the Gmail watcher is running.
- */
-export function isGmailWatcherRunning(): boolean {
-  return watcherProcess !== null && !shuttingDown;
 }

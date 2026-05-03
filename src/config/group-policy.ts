@@ -1,11 +1,11 @@
-import type { ChannelId } from "../channels/plugins/types.js";
+import type { ChannelId } from "../channels/plugins/channel-id.types.js";
 import { resolveAccountEntry } from "../routing/account-lookup.js";
 import { normalizeAccountId } from "../routing/session-key.js";
 import {
   normalizeLowercaseStringOrEmpty,
   normalizeOptionalString,
 } from "../shared/string-coerce.js";
-import type { OpenClawConfig } from "./config.js";
+import type { OpenClawConfig } from "./types.openclaw.js";
 import {
   parseToolsBySenderTypedKey,
   type GroupToolPolicyBySenderConfig,
@@ -13,9 +13,9 @@ import {
   type ToolsBySenderKeyType,
 } from "./types.tools.js";
 
-export type GroupPolicyChannel = ChannelId;
+type GroupPolicyChannel = ChannelId;
 
-export type ChannelGroupConfig = {
+type ChannelGroupConfig = {
   requireMention?: boolean;
   ingest?: boolean;
   tools?: GroupToolPolicyConfig;
@@ -56,7 +56,7 @@ function resolveChannelGroupConfig(
   return groups[matchedKey];
 }
 
-export type GroupToolPolicySender = {
+type GroupToolPolicySender = {
   senderId?: string | null;
   senderName?: string | null;
   senderUsername?: string | null;
@@ -372,6 +372,7 @@ export function resolveChannelGroupRequireMention(params: {
   accountId?: string | null;
   groupIdCaseInsensitive?: boolean;
   requireMentionOverride?: boolean;
+  configuredGroupDefaultsToNoMention?: boolean;
   overrideOrder?: "before-config" | "after-config";
 }): boolean {
   const { requireMentionOverride, overrideOrder = "after-config" } = params;
@@ -391,6 +392,9 @@ export function resolveChannelGroupRequireMention(params: {
   }
   if (overrideOrder !== "before-config" && typeof requireMentionOverride === "boolean") {
     return requireMentionOverride;
+  }
+  if (params.configuredGroupDefaultsToNoMention && groupConfig) {
+    return false;
   }
   return true;
 }

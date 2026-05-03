@@ -2,9 +2,9 @@ import path from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { confirm, select, text } from "@clack/prompts";
 import { listAgentIds, resolveAgentDir, resolveDefaultAgentId } from "../agents/agent-scope.js";
-import type { AuthProfileStore } from "../agents/auth-profiles.js";
 import { AUTH_STORE_VERSION } from "../agents/auth-profiles/constants.js";
 import { loadPersistedAuthProfileStore } from "../agents/auth-profiles/persisted.js";
+import type { AuthProfileStore } from "../agents/auth-profiles/types.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import type { SecretProviderConfig, SecretRef, SecretRefSource } from "../config/types.secrets.js";
 import { isSafeExecutableValue } from "../infra/exec-safety.js";
@@ -446,6 +446,13 @@ async function promptFileProvider(
     initialValue: base?.maxBytes,
     max: 20 * 1024 * 1024,
   });
+  const allowInsecurePath = assertNoCancel(
+    await confirm({
+      message: "Allow insecure file path checks?",
+      initialValue: base?.allowInsecurePath ?? false,
+    }),
+    "Secrets configure cancelled.",
+  );
 
   return {
     source: "file",
@@ -453,6 +460,7 @@ async function promptFileProvider(
     mode,
     ...(timeoutMs ? { timeoutMs } : {}),
     ...(maxBytes ? { maxBytes } : {}),
+    ...(allowInsecurePath ? { allowInsecurePath: true } : {}),
   };
 }
 
